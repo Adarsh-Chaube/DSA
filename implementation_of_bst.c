@@ -51,12 +51,41 @@ void postorder(tree *root)
         printf("%d\t",root->info);
     }
 }
+void count_nodes(tree *root,int*c)
+{
+    if(root!=NULL)
+    {
+        (*c)++;
+        count_nodes(root->left,c);
+        count_nodes(root->right,c);
+    }
+}
+void count_leaf(tree *root,int*c)
+{
+    if(root!=NULL)
+    {
+        if(root->left==NULL && root->right==NULL)
+            (*c)++;
+        count_leaf(root->left,c);
+        count_leaf(root->right,c);
+    }
+}
+void count_single(tree *root,int*c)
+{
+    if(root!=NULL)
+    {
+        if(root->left==NULL ^ root->right==NULL)
+            (*c)++;
+        count_single(root->left,c);
+        count_single(root->right,c);
+    }
+}
 int main()
 {
     tree *root=NULL;
-    int c,v;
+    int c,v,count=0,cl=0,cs=0;
     do{
-        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\nEnter your choice : ");
+        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\n5-Count the number of nodes\n6-Count number of leaf nodes\n7-Count number of nodes with single child\nEnter your choice : ");
         scanf("%d",&c);
         switch (c)
         {
@@ -77,7 +106,21 @@ int main()
                 printf("The postorder traversal of the BST is : ");
                 postorder(root);
                 break;
+            case 5:
+                count=0;
+                count_nodes(root,&count);
+                printf("The total no. of nodes are : %d\n",count);
+                break;
+            case 6:
+                cl=0;
+                count_leaf(root,&cl);
+                printf("The total no. of leaf nodes are : %d\n",cl);
+                break;
+            case 7:
+                cs=0;
+                count_single(root,&cs);
+                printf("The total no. of nodes with single child are : %d\n",cs);
         }
-    }while(c>0&&c<5);
+    }while(c>0&&c<8);
     return 0;
 }
