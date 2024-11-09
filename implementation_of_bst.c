@@ -80,12 +80,54 @@ void count_single(tree *root,int*c)
         count_single(root->right,c);
     }
 }
+void min_value(tree*root)
+{
+    tree*p=root;
+    while(p->left!=NULL)
+    {
+        p=p->left;
+    }
+    printf("The minimun value is : %d\n",p->info);
+}
+void max_value(tree *root)
+{
+    tree*p=root;
+    while(p->right!=NULL)
+    {
+        p=p->right;
+    }
+    printf("The maximum value is : %d\n",p->info);
+}
+void search(tree*root)
+{
+    printf("Enter the number to be searched : ");
+    int v;
+    scanf("%d",&v);
+    tree*p=root;
+    while(p!=NULL)
+    {
+        if(v>p->info)
+        {
+            p=p->right;
+        }
+        else if(v==p->info)
+        {
+            printf("The number is found.\n");
+            return;
+        }
+        else
+        {
+            p=p->left;
+        }
+    }
+    printf("The number is not found.\n");
+}
 int main()
 {
     tree *root=NULL;
     int c,v,count=0,cl=0,cs=0;
     do{
-        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\n5-Count the number of nodes\n6-Count number of leaf nodes\n7-Count number of nodes with single child\nEnter your choice : ");
+        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\n5-Count the number of nodes\n6-Count number of leaf nodes\n7-Count number of nodes with single child\n8-Print minimum value\n9-Print maximum value\nEnter your choice : ");
         scanf("%d",&c);
         switch (c)
         {
@@ -120,7 +162,17 @@ int main()
                 cs=0;
                 count_single(root,&cs);
                 printf("The total no. of nodes with single child are : %d\n",cs);
+                break;
+            case 8:
+                min_value(root);
+                break;
+            case 9:
+                max_value(root);
+                break;
+            case 10:
+                search(root);
+                break;
         }
-    }while(c>0&&c<8);
+    }while(c>0&&c<11);
     return 0;
 }
