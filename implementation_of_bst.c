@@ -122,12 +122,54 @@ void search(tree*root)
     }
     printf("The number is not found.\n");
 }
+tree *delete(tree*root,int v)
+{
+    if(root==NULL)
+        return root;
+    else
+    {
+        if(v>root->info)
+        {
+            root->right=delete(root->right,v);
+        }
+        else if(v<root->info)
+        {
+            root->left=delete(root->left,v);
+        }
+        else
+        {
+            if(root->left==NULL)
+            {
+                root=root->right;
+                return root;
+            }
+            if(root->right==NULL)
+            {
+                root=root->left;
+                return root;
+            }
+            tree *p=root->right,*ptr=NULL;
+            while(p->left!=NULL)
+            {
+                ptr=p;
+                p=p->left;
+            }
+            if(ptr!=NULL)
+                ptr->left=p->right;
+            else
+                root->right=p->right;
+            root->info=p->info;
+            free(p);
+            return root;
+        }
+    }
+}
 int main()
 {
     tree *root=NULL;
     int c,v,count=0,cl=0,cs=0;
     do{
-        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\n5-Count the number of nodes\n6-Count number of leaf nodes\n7-Count number of nodes with single child\n8-Print minimum value\n9-Print maximum value\nEnter your choice : ");
+        printf("1-Insert element in BST\n2-Inorder traversal of BST\n3-Preorder traversal of BST\n4-Postorder traversal of BST\n5-Count the number of nodes\n6-Count number of leaf nodes\n7-Count number of nodes with single child\n8-Print minimum value\n9-Print maximum value\n10-Search for an element\n11-Delete an element\nEnter your choice : ");
         scanf("%d",&c);
         switch (c)
         {
@@ -172,7 +214,12 @@ int main()
             case 10:
                 search(root);
                 break;
+            case 11:
+                printf("Enter the value to be deleted : ");
+                scanf("%d",&v);
+                delete(root,v);
+                break;
         }
-    }while(c>0&&c<11);
+    }while(c>0&&c<12);
     return 0;
 }
