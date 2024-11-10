@@ -140,11 +140,13 @@ tree *delete(tree*root,int v)
         {
             if(root->left==NULL)
             {
+                free(root);
                 root=root->right;
                 return root;
             }
             if(root->right==NULL)
             {
+                free(root);
                 root=root->left;
                 return root;
             }
